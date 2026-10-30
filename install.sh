@@ -15,6 +15,12 @@ NC='\033[0m' # No Color
 # CONFIGURATION
 # ============================================================
 VENV_NAME="whisperx-env"
+PYTHON_VERSION=$(cat .python-version)  # whisperx exige Python <3.14 ; seule source de vérité
+
+# /tmp est un tmpfs à quota : pip y décompresse les wheels CUDA (plusieurs Go) et sature
+export TMPDIR="$HOME/.cache/install-tmp"
+mkdir -p "$TMPDIR"
+trap 'rm -rf "$TMPDIR"' EXIT
 
 # ============================================================
 # FONCTIONS
@@ -42,7 +48,12 @@ if [ -d "$VENV_NAME" ]; then
     rm -rf "$VENV_NAME"
 fi
 
-python3 -m venv "$VENV_NAME"
+# uv télécharge Python $PYTHON_VERSION si le système n'a que 3.14
+UV_BOOT=$(mktemp -d)
+python3 -m venv "$UV_BOOT"
+"$UV_BOOT/bin/pip" install -q uv
+"$UV_BOOT/bin/uv" venv --seed --python "$PYTHON_VERSION" "$VENV_NAME"
+rm -rf "$UV_BOOT"
 ok "Environnement virtuel créé"
 
 # Activer le venv
