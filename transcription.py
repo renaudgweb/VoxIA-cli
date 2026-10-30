@@ -102,10 +102,14 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             continue
 
         if speaker != current_speaker:
+            if current_speaker is not None:
+                f.write("\n\n")
             current_speaker = speaker
-            f.write(f"\n[{current_speaker} - {format_timestamp(start)}]\n")
-
-        f.write(text + " ")
+            f.write(f"[{current_speaker} - {format_timestamp(start)}]\n")
+        else:
+            f.write(" ")
+        f.write(text)
+    f.write("\n")
 
 print(f"✅ Transcription terminée ! Fichier : '{OUTPUT_FILE}'")
 
