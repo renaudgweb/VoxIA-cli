@@ -93,13 +93,22 @@ Le script va automatiquement :
 
 ## 🎬 Étape 5 : Préparer votre fichier audio
 
-Extrayez la piste audio de votre vidéo avec ffmpeg :
+Extrayez la piste audio de votre vidéo (MP4, MKV, MOV, WebM…) en **MP3** avec ffmpeg :
+
+```bash
+ffmpeg -i reunion.mp4 -vn -ar 16000 -ac 1 -b:a 64k reunion.mp3
+```
+
+> `-vn` ignore la vidéo, `-ar 16000 -ac 1` convertit en 16 kHz mono (format idéal pour Whisper).
+> Remplacez `reunion.mp4` par n'importe quel fichier audio/vidéo : ffmpeg détecte le format automatiquement.
+
+Ou, pour obtenir un WAV :
 
 ```bash
 ffmpeg -i reunion.mp4 -ar 16000 -ac 1 -c:a pcm_s16le audio.wav
 ```
 
-Ou si vous avez déjà un MP3 :
+Si vous avez déjà un MP3 :
 
 ```bash
 # Vérifier que le fichier est lisible
