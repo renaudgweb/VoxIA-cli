@@ -107,7 +107,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             current_speaker = speaker
             f.write(f"[{current_speaker} - {format_timestamp(start)}]\n")
         else:
-            f.write(" ")
+            f.write("\n")
         f.write(text)
     f.write("\n")
 
