@@ -96,7 +96,7 @@ Le script va automatiquement :
 Extrayez la piste audio de votre vidéo (MP4, MKV, MOV, WebM…) en **MP3** avec ffmpeg :
 
 ```bash
-ffmpeg -i reunion.mp4 -vn -ar 16000 -ac 1 -b:a 64k reunion.mp3
+ffmpeg -i reunion.mp4 -vn -ar 16000 -ac 1 -b:a 64k audio_file.mp3
 ```
 
 > `-vn` ignore la vidéo, `-ar 16000 -ac 1` convertit en 16 kHz mono (format idéal pour Whisper).
